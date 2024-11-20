@@ -2,7 +2,8 @@ name: Daily Update
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Exécution chaque jour à minuit (UTC)
+    - cron: "0 0 * * *" # Exécution quotidienne à minuit UTC
+  workflow_dispatch: # Permet de déclencher manuellement le workflow
 
 jobs:
   update:
@@ -17,13 +18,21 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm ci # Remplace npm install pour plus de rapidité et de fiabilité
 
       - name: Run update script
         run: node update.js
 
-      - name: Push changes
+      - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
+
+      - name: Commit and Push changes
+        run: |
+          git add .
+          git commit -m "Automated daily update"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
