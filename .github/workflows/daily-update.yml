@@ -12,17 +12,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install dependencies
-        run: |
-          npm ci # Remplace npm install pour plus de rapidité et de fiabilité
-
       - name: Run update script
-        run: node update.js
+        run: node update.js # Assurez-vous que update.js fonctionne avec Node.js installé par défaut sur les runners
 
       - name: Configure Git
         run: |
