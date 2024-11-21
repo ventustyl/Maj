@@ -12,8 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run update script
-        run: node update.js # Assurez-vous que update.js fonctionne avec Node.js installé par défaut sur les runners
+      - name: Make changes
+        run: |
+          echo "Automated daily update" > update-log.txt
+          date >> update-log.txt
 
       - name: Configure Git
         run: |
